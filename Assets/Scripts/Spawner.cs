@@ -13,26 +13,18 @@ public class Spawner : MonoBehaviour
         _spawnTime = 2f;
         _footmanSpawners = FindObjectsOfType<FootmanSpawner>();
 
-        StartCoroutine(SpawnFootman(_spawnTime));
+        StartCoroutine(SpawnFootman());
     }
 
-    private IEnumerator SpawnFootman(float timeToSpawn)
+    private IEnumerator SpawnFootman()
     {
-        float currentTime = 0;
+        WaitForSeconds waitForSeconds = new WaitForSeconds(_spawnTime);
 
         while (true)
         {
-            if (currentTime < timeToSpawn)
-            {
-                currentTime += Time.deltaTime;
-            }
-            else
-            {
-                _footmanSpawners[Random.Range(0, _footmanSpawners.Length)].Spawn();
-                currentTime = 0;
-            }
+            _footmanSpawners[Random.Range(0, _footmanSpawners.Length)].Spawn();
 
-            yield return null;
+            yield return waitForSeconds;
         }
     }
 }
